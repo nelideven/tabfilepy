@@ -11,7 +11,7 @@
 - Python 3.9 or higher
 - Bash or Command Prompt (depending on OS)
 
-## How to use
+## Usage
 1. Install the library
 ```
 pip install tabfilepy

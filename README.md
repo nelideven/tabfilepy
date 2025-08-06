@@ -17,7 +17,7 @@
 pip install tabfilepy
 ```
 
-2. Import and initialise the handler
+2. Import and initialize the handler
 ```
 # Example code
 from tabfilepy import tabfilepy

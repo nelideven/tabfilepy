@@ -11,7 +11,6 @@ import tempfile
 
 class tabfilepy:
     def __init__(self, windows_script="fp_autocomplete.cmd", posix_script="fp_autocomplete.sh"):
-        # Get the absolute path to this file
         self.PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
         self.windows_script = os.path.join(self.PACKAGE_DIR, windows_script)
         self.posix_script = os.path.join(self.PACKAGE_DIR, posix_script)
@@ -34,3 +33,7 @@ class tabfilepy:
             with open(self.temp_file, 'r') as file:
                 return file.read().strip()
         raise FileNotFoundError("Output file not found.")
+
+def main():
+    result = tabfilepy().get_filename()
+    print(result)

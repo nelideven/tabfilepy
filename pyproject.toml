@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tabfilepy"
-version = "1.0.0"
+version = "1.1.0"
 description = "A simple Python (and associated cmd/bash) script which allows file directory tab auto-completions."
 authors = [
     { name = "Nyoman", email = "nnyomandhipa@gmail.com" }

@@ -10,31 +10,33 @@ import os
 import tempfile
 
 class tabfilepy:
-    PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
-    windows_script = os.path.join(PACKAGE_DIR, "fp_autocomplete.cmd")
-    posix_script = os.path.join(PACKAGE_DIR, "fp_autocomplete.sh")
-    temp_file = os.path.join(tempfile.gettempdir(), 'filename_output.txt')
+    def __init__(self, windows_script="fp_autocomplete.cmd", posix_script="fp_autocomplete.sh"):
+        self.package_dir = os.path.dirname(os.path.abspath(__file__))
+        self.windows_script = os.path.join(self.package_dir, windows_script)
+        self.posix_script = os.path.join(self.package_dir, posix_script)
+        self.temp_file = os.path.join(tempfile.gettempdir(), 'filename_output.txt')
 
-    @classmethod
-    def get_filename(cls):
-        """Retrieve the filename using the appropriate autocomplete script."""
+    def get_filename(self):
+        """Run the autocomplete script and return the filename."""
         try:
             if os.name == "nt":
-                subprocess.run(['cmd', '/c', cls.windows_script], check=True)
+                subprocess.run(['cmd', '/c', self.windows_script], check=True)
             else:
-                subprocess.run(['bash', cls.posix_script], check=True)
-            return cls._read_output()
+                subprocess.run(['bash', self.posix_script], check=True)
+            return self._read_output()
         except subprocess.CalledProcessError as e:
             raise RuntimeError(f"Error executing script: {e}")
 
-    @classmethod
-    def _read_output(cls):
-        """Reads the filename from the temporary output file."""
-        if os.path.exists(cls.temp_file):
-            with open(cls.temp_file, 'r') as file:
+    def _read_output(self):
+        """Read the filename from the temp output file."""
+        if os.path.exists(self.temp_file):
+            with open(self.temp_file, 'r') as file:
                 return file.read().strip()
         raise FileNotFoundError("Output file not found.")
 
+def get_filename():
+    return tabfilepy().get_filename()
+
+
 def main():
-    result = tabfilepy.get_filename()
-    print(result)
+    print(tabfilepy().get_filename())

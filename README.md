@@ -20,12 +20,9 @@ pip install tabfilepy
 2. Import and initialize the handler
 ```
 # Example code
-from tabfilepy import tabfilepy
-
-# Create the instance
-t = tabfilepy()
+import tabfilepy
 
 # Run tab completion and retrieve the selected file
-filename = t.get_filename()
+filename = tabfilepy.get_filename()
 print(f"Selected file: {filename}")
 ```

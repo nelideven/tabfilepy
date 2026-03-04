@@ -7,13 +7,9 @@
 setlocal EnableDelayedExpansion
 
 REM Ask for file path
-:file
 set /p "filename=File path: "
 
-REM Extend the file path
-for /f "tokens=*" %%I in ('echo %filename%') do ( set "ext_filename=%%~fI" )
-
-REM Checking if directory exists and writing it to the filename_output.txt
-if exist "!ext_filename!" ( echo !ext_filename! > "%TEMP%\filename_output.txt" ) else ( goto prompt )
+REM Print out file path
+ECHO !filename!
 
 endlocal

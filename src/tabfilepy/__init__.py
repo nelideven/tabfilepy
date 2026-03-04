@@ -14,29 +14,23 @@ class tabfilepy:
         self.package_dir = os.path.dirname(os.path.abspath(__file__))
         self.windows_script = os.path.join(self.package_dir, windows_script)
         self.posix_script = os.path.join(self.package_dir, posix_script)
-        self.temp_file = os.path.join(tempfile.gettempdir(), 'filename_output.txt')
 
     def get_filename(self):
         """Run the autocomplete script and return the filename."""
         try:
-            if os.name == "nt":
-                subprocess.run(['cmd', '/c', self.windows_script], check=True)
+            if os.name == 'nt':
+                result = subprocess.run(["cmd", "/c", self.windows_script], stdout=subprocess.PIPE, text=True)
             else:
-                subprocess.run(['bash', self.posix_script], check=True)
-            return self._read_output()
+                result = subprocess.run(["bash", self.posix_script], stdout=subprocess.PIPE, text=True)
+            extfilename = os.path.abspath(os.path.expanduser(result.stdout.strip()))
+            return extfilename
         except subprocess.CalledProcessError as e:
             raise RuntimeError(f"Error executing script: {e}")
-
-    def _read_output(self):
-        """Read the filename from the temp output file."""
-        if os.path.exists(self.temp_file):
-            with open(self.temp_file, 'r') as file:
-                return file.read().strip()
-        raise FileNotFoundError("Output file not found.")
+        except KeyboardInterrupt:
+            print("tabfilepy interrupted by user.")
 
 def get_filename():
     return tabfilepy().get_filename()
-
 
 def main():
     print(tabfilepy().get_filename())

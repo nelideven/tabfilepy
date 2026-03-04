@@ -9,13 +9,7 @@
 stty sane
 
 # Prompt the user for a filename with autocompletion
-while true; do
-    read -e -p "File path: " filename
-    ext_filename=$(eval echo "$filename")
-    if [ $? -eq 0 ]; then
-        break
-    fi
-done
+read -e -p "File path: " filename
 
 # Write the result to a temporary file
-echo "$ext_filename" > /tmp/filename_output.txt
+echo "$filename"

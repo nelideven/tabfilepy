@@ -6,8 +6,11 @@
 @ECHO OFF
 setlocal EnableDelayedExpansion
 
-REM Ask for file path
-set /p "filename=File path: "
+REM Use provided argument as prompt, or default
+set "prompt=%~1"
+
+REM Ask for file path with custom prompt
+set /p "filename=%prompt%"
 
 REM Print out file path
 ECHO !filename!

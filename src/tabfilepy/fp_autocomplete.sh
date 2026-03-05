@@ -8,8 +8,11 @@
 # Ensure characters are displayed correctly
 stty sane
 
-# Prompt the user for a filename with autocompletion
-read -e -p "File path: " filename
+# Use provided argument as prompt, or default
+prompt="$1"
 
-# Write the result to a temporary file
+# Prompt the user for a filename with autocompletion
+read -e -p "$prompt" filename
+
+# Output the result
 echo "$filename"

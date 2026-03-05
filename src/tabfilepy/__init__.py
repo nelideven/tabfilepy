@@ -15,13 +15,13 @@ class tabfilepy:
         self.windows_script = os.path.join(self.package_dir, windows_script)
         self.posix_script = os.path.join(self.package_dir, posix_script)
 
-    def get_filename(self):
+    def get_filename(self, prompt="Enter file path: "):
         """Run the autocomplete script and return the filename."""
         try:
             if os.name == 'nt':
-                result = subprocess.run(["cmd", "/c", self.windows_script], stdout=subprocess.PIPE, text=True)
+                result = subprocess.run(["cmd", "/c", self.windows_script, prompt], stdout=subprocess.PIPE, text=True)
             else:
-                result = subprocess.run(["bash", self.posix_script], stdout=subprocess.PIPE, text=True)
+                result = subprocess.run(["bash", self.posix_script, prompt], stdout=subprocess.PIPE, text=True)
             extfilename = os.path.abspath(os.path.expanduser(result.stdout.strip()))
             return extfilename
         except subprocess.CalledProcessError as e:
@@ -29,8 +29,8 @@ class tabfilepy:
         except KeyboardInterrupt:
             print("tabfilepy interrupted by user.")
 
-def get_filename():
-    return tabfilepy().get_filename()
+def get_filename(prompt="Enter file path: "):
+    return tabfilepy().get_filename(prompt)
 
 def main():
     print(tabfilepy().get_filename())
